@@ -1,8 +1,10 @@
 import express from "express";
 import productRoutes from "./src/routes/products.js";
 import registerCustomerRoutes from "./src/routes/registerCustomer.js";
+import registerAdminRoutes from "./src/routes/registerAdmin.js";
 import cookieParser from "cookie-parser";
 import loginCustomerRoutes from "./src/routes/login.js";
+import loginAdminRoutes from "./src/routes/loginAdmin.js";
 import logoutRoutes from "./src/routes/logout.js";
 import cors from "cors";
 
@@ -24,7 +26,9 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/api/registerCustomer", registerCustomerRoutes);
+app.use("/api/registerAdmin", registerAdminRoutes);
 app.use("/api/loginCustomers", loginCustomerRoutes);
+app.use("/api/loginAdmins", loginAdminRoutes);
 app.use("/api/logout", logoutRoutes);
 
 export default app;

@@ -3,12 +3,13 @@ const registerCustomerController = {};
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import { config } from "../../config.js";
+import adminsModel from "../models/admins.js";
 import customersModel from "../models/customers.js";
 
 //INSERT de un cliente y apertura de sesion
 registerCustomerController.register = async (req, res) => {
   //#1- Solicito los datos a guardar
-  const { name, lastName, birthdate, email, password, userType } = req.body;
+  const { name, lastName, birthdate, email, password } = req.body;
 
   try {
     if (!name || !email || !password) {
@@ -17,8 +18,10 @@ registerCustomerController.register = async (req, res) => {
         .json({ message: "Name, email and password are required" });
     }
 
-    const exists = await customersModel.findOne({ email });
-    if (exists) {
+    const customerExists = await customersModel.findOne({ email });
+    const adminExists = await adminsModel.findOne({ email });
+
+    if (customerExists || adminExists) {
       return res.status(409).json({ message: "Email already exists" });
     }
 
@@ -33,7 +36,7 @@ registerCustomerController.register = async (req, res) => {
       isVerified: false,
       loginAttemps: 0,
       timeOut: null,
-      userType: userType === "Admin" ? "Admin" : "Customer",
+      userType: "Customer",
     });
 
     //#3- guardo en la base de datos

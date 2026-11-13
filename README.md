@@ -28,8 +28,10 @@ En `.env`, `DB_URI` y `JWT_secret_key` tienen que tener valor. El resto de varia
 
 | Metodo | Ruta | Auth |
 | --- | --- | --- |
-| `POST` | `/api/registerCustomer` | No. Body: `name`, `email`, `password`, `userType` opcional (`Customer` o `Admin`) |
+| `POST` | `/api/registerCustomer` | No. Body: `name`, `email`, `password`. Guarda en `Customers` |
+| `POST` | `/api/registerAdmin` | No. Body: `name`, `email`, `password`. Guarda en `Admins` |
 | `POST` | `/api/loginCustomers` | No. Body: `email`, `password`. Al tercer fallo bloquea 15 minutos |
+| `POST` | `/api/loginAdmins` | No. Body: `email`, `password`. El token sale con `userType: "Admin"` |
 | `POST` | `/api/logout` | Borra la cookie `authCookie` |
 | `GET` | `/api/products` | Cookie o Bearer. `Customer` o `Admin` |
 | `POST` | `/api/products` | Cookie o Bearer. Solo `Admin` |
